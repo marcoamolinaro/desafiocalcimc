@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Pessoa {
   final String _id = UniqueKey().toString();
@@ -34,5 +35,9 @@ class Pessoa {
 
   void setAltura(double altura) {
     _altura = altura;
+  }
+
+  double calculaIMC() {
+    return _peso / pow(_altura, 2);
   }
 }
