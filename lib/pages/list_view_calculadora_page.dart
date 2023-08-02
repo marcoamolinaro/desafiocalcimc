@@ -22,12 +22,7 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
   @override
   void initState() {
     super.initState();
-    if (_pessoas.isEmpty) {
-      obterPessoas();
-    }
-    // obterPessoas();
-    // debugPrint("Quantidade de pessoas na lista no initState");
-    // debugPrint(_pessoas.length.toString());
+    obterPessoas();
   }
 
   void obterPessoas() async {
