@@ -96,7 +96,6 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
                                     var pessoa = Pessoa(
                                         nomeController.text, peso, altura);
                                     pessoaRepository.adicionar(pessoa);
-                                    //_pessoas.add(pessoa);
                                     debugPrint(
                                         "Quantidade de pessoas na lista ${_pessoas.length}");
                                     setState(() {
