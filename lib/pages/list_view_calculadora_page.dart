@@ -1,4 +1,5 @@
 import 'package:desafiocalcimc/repository/pessoa_repository.dart';
+import 'package:desafiocalcimc/utils/classificacao.dart';
 import 'package:flutter/material.dart';
 
 import '../model/pessoa.dart';
@@ -84,7 +85,7 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
                   });
             }),
         body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Column(
               children: [
                 Expanded(
@@ -92,6 +93,8 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
                   itemCount: _pessoas.length,
                   itemBuilder: (BuildContext bc, int index) {
                     var pessoa = _pessoas[index];
+                    var imc = pessoa.calculaIMC();
+                    var classificacao = Classificacao.classificar(imc);
                     return Dismissible(
                         onDismissed: (DismissDirection dd) async {
                           await pessoaRepository.revover(pessoa.getId());
@@ -100,10 +103,10 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
                         key: Key(pessoa.getId()),
                         child: ListTile(
                           title: Text(
-                              "Nome: ${pessoa.getNome()} - IMC: ${pessoa.calculaIMC().round()}"),
+                              "Nome: ${pessoa.getNome()} - IMC: ${imc.round()} - $classificacao"),
                         ));
                   },
-                ))
+                )),
               ],
             )));
   }
