@@ -61,7 +61,7 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
                               TextButton(
                                   child: const Text("Salvar"),
                                   onPressed: () {
-                                    if (nomeController.text.trim().length < 3) {
+                                    if (nomeController.text.trim().isEmpty) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(const SnackBar(
                                               content: Text(
