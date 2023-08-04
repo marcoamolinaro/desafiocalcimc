@@ -28,6 +28,7 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
 
   void obterPessoas() async {
     _pessoas = await pessoaRepository.listar();
+    setState(() {});
   }
 
   @override
