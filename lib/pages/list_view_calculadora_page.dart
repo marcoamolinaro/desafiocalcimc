@@ -61,10 +61,38 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
                               TextButton(
                                   child: const Text("Salvar"),
                                   onPressed: () {
-                                    var peso =
-                                        double.parse(pesoController.text);
-                                    var altura =
-                                        double.parse(alturaController.text);
+                                    if (nomeController.text.trim().length < 3) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "O nome deve ser preenchido!")));
+                                      return;
+                                    }
+                                    var peso = 0.0;
+                                    if (pesoController.text.trim().isNotEmpty) {
+                                      peso = double.parse(pesoController.text);
+                                    }
+                                    var altura = 0.0;
+                                    if (alturaController.text
+                                        .trim()
+                                        .isNotEmpty) {
+                                      altura =
+                                          double.parse(alturaController.text);
+                                    }
+                                    if (peso == 0) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "O peso deve ser maior que zero!")));
+                                      return;
+                                    }
+                                    if (altura == 0) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "A altura deve ser maior que zero!")));
+                                      return;
+                                    }
                                     var pessoa = Pessoa(
                                         nomeController.text, peso, altura);
                                     pessoaRepository.adicionar(pessoa);
