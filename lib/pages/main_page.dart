@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
                   debugPrint("Valor $value");
                   if (value == 1) {
                     debugPrint("Saindo do aplicativo $value");
-                    //Navigator.pop(context);
+                    Navigator.pop(context);
                   }
                 },
                 currentIndex: posicaoPagina,

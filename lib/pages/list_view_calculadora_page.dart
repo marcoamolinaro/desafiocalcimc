@@ -33,108 +33,107 @@ class _ListViewCalcudoraPageState extends State<ListViewCalcudoraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext bc) {
-                    return Scaffold(
-                        appBar: AppBar(title: const Text("Dados da Pessoa")),
-                        body: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 16),
-                          child: ListView(
-                            children: [
-                              const TextLabel(texto: "Nome"),
-                              TextField(
-                                controller: nomeController,
-                              ),
-                              const TextLabel(texto: "Peso"),
-                              TextField(
-                                controller: pesoController,
-                              ),
-                              const TextLabel(texto: "Altura"),
-                              TextField(
-                                controller: alturaController,
-                              ),
-                              TextButton(
-                                  child: const Text("Salvar"),
-                                  onPressed: () {
-                                    if (nomeController.text.trim().isEmpty) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "O nome deve ser preenchido!")));
-                                      return;
-                                    }
-                                    var peso = 0.0;
-                                    if (pesoController.text.trim().isNotEmpty) {
-                                      peso = double.parse(pesoController.text);
-                                    }
-                                    var altura = 0.0;
-                                    if (alturaController.text
-                                        .trim()
-                                        .isNotEmpty) {
-                                      altura =
-                                          double.parse(alturaController.text);
-                                    }
-                                    if (peso == 0) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "O peso deve ser maior que zero!")));
-                                      return;
-                                    }
-                                    if (altura == 0) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
-                                              content: Text(
-                                                  "A altura deve ser maior que zero!")));
-                                      return;
-                                    }
-                                    var pessoa = Pessoa(
-                                        nomeController.text, peso, altura);
-                                    pessoaRepository.adicionar(pessoa);
-                                    debugPrint(
-                                        "Quantidade de pessoas na lista ${_pessoas.length}");
-                                    setState(() {
-                                      nomeController.text = "";
-                                      pesoController.text = "";
-                                      alturaController.text = "";
-                                      obterPessoas();
-                                    });
-                                    Navigator.pop(context);
-                                  }),
-                            ],
-                          ),
-                        ));
-                  });
-            }),
-        body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Column(
-              children: [
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: _pessoas.length,
-                  itemBuilder: (BuildContext bc, int index) {
-                    var pessoa = _pessoas[index];
-                    var imc = pessoa.calculaIMC();
-                    var classificacao = Classificacao.classificar(imc);
-                    return Dismissible(
-                        onDismissed: (DismissDirection dd) async {
-                          await pessoaRepository.revover(pessoa.getId());
-                          obterPessoas();
-                        },
-                        key: Key(pessoa.getId()),
-                        child: ListTile(
-                          title: Text(
-                              "Nome: ${pessoa.getNome()} - IMC: ${imc.round()} - $classificacao"),
-                        ));
-                  },
-                )),
-              ],
-            )));
+      body: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Column(
+            children: [
+              Expanded(
+                  child: ListView.builder(
+                itemCount: _pessoas.length,
+                itemBuilder: (BuildContext bc, int index) {
+                  var pessoa = _pessoas[index];
+                  var imc = pessoa.calculaIMC();
+                  var classificacao = Classificacao.classificar(imc);
+                  return Dismissible(
+                      onDismissed: (DismissDirection dd) async {
+                        await pessoaRepository.revover(pessoa.getId());
+                        obterPessoas();
+                      },
+                      key: Key(pessoa.getId()),
+                      child: ListTile(
+                        title: Text(
+                            "Nome: ${pessoa.getNome()} - IMC: ${imc.round()} - $classificacao"),
+                      ));
+                },
+              )),
+            ],
+          )),
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext bc) {
+                  return Scaffold(
+                      appBar: AppBar(title: const Text("Dados da Pessoa")),
+                      body: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
+                        child: ListView(
+                          children: [
+                            const TextLabel(texto: "Nome"),
+                            TextField(
+                              controller: nomeController,
+                            ),
+                            const TextLabel(texto: "Peso"),
+                            TextField(
+                              controller: pesoController,
+                            ),
+                            const TextLabel(texto: "Altura"),
+                            TextField(
+                              controller: alturaController,
+                            ),
+                            TextButton(
+                                child: const Text("Salvar"),
+                                onPressed: () {
+                                  if (nomeController.text.trim().isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "O nome deve ser preenchido!")));
+                                    return;
+                                  }
+                                  var peso = 0.0;
+                                  if (pesoController.text.trim().isNotEmpty) {
+                                    peso = double.parse(pesoController.text);
+                                  }
+                                  var altura = 0.0;
+                                  if (alturaController.text.trim().isNotEmpty) {
+                                    altura =
+                                        double.parse(alturaController.text);
+                                  }
+                                  if (peso == 0) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "O peso deve ser maior que zero!")));
+                                    return;
+                                  }
+                                  if (altura == 0) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                "A altura deve ser maior que zero!")));
+                                    return;
+                                  }
+                                  var pessoa =
+                                      Pessoa(nomeController.text, peso, altura);
+                                  pessoaRepository.adicionar(pessoa);
+                                  debugPrint(
+                                      "Quantidade de pessoas na lista ${_pessoas.length}");
+                                  setState(() {
+                                    nomeController.text = "";
+                                    pesoController.text = "";
+                                    alturaController.text = "";
+                                    obterPessoas();
+                                  });
+                                  Navigator.pop(context);
+                                }),
+                          ],
+                        ),
+                      ));
+                });
+          }),
+    );
   }
 }
